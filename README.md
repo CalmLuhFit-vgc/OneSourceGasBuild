@@ -19,7 +19,7 @@ This project uses a hands-off tracking system designed around the principle that
 
 - **Every time you start a Claude Code session in this folder**, the SessionStart hook prints yesterday's log + today's draft. You see what you shipped last, what's open, and any flagged blockers.
 - **Every time a session ends**, the SessionEnd hook appends mechanical signals to today's log: files modified (via git or mtime), session duration, end timestamp.
-- **Every Friday at 9am** (once the Cloud Routine is scheduled), a fresh weekly Richard PDF is built from this week's logs without you doing anything.
+- **Every Friday morning** (once you've enabled it), a fresh weekly Richard PDF is built from this week's logs without you doing anything.
 - **Energy check:** if you log energy 1–2 for 4+ days running, the SessionStart hook flags it.
 
 ### What you do manually — quick commands when you remember
