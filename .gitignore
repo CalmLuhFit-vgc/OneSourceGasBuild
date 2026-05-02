@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Generated PDFs (rebuilt automatically — markdown source is committed)
+logs/reports/richard/*.pdf
+logs/reports/richard/.weekly-report.html
+
+# Session markers
+logs/daily/.last-session-end
+
+# Local Claude overrides (per-machine)
+.claude/.local
+.claude/settings.local.json
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# Environment files
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Build output (will be added when actual code arrives)
+.next/
+dist/
+out/
+build/
+
+# Misc
+*.log
+npm-debug.log*
+.npm
