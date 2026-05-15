@@ -8,14 +8,35 @@ const path = require('path');
 const { execSync } = require('child_process');
 const { marked } = require('marked');
 
-const PROJECT_DIR = '/Users/phobos/Desktop/OneSourceGasBuild';
+const PROJECT_DIR = path.resolve(__dirname, '..');
 const LOGS_DIR = path.join(PROJECT_DIR, 'logs');
 const DAILY_DIR = path.join(LOGS_DIR, 'daily');
 const REPORTS_DIR = path.join(LOGS_DIR, 'reports', 'richard');
 const LOGO_PATH = path.join(PROJECT_DIR, 'assets', 'one-source-gas-logo.png');
 const TMP_HTML = path.join(REPORTS_DIR, '.weekly-report.html');
 const PDF_OUT = path.join(REPORTS_DIR, 'weekly-report.pdf');
-const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+// Detect available headless browser across platforms
+function findChrome() {
+  const candidates = [
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    '/usr/bin/google-chrome-stable',
+    '/usr/bin/google-chrome',
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser',
+    '/snap/bin/chromium',
+  ];
+  for (const c of candidates) {
+    try { if (fs.existsSync(c)) return c; } catch {}
+  }
+  try {
+    const which = execSync('which chromium-browser google-chrome chromium 2>/dev/null', { stdio: 'pipe' }).toString().trim();
+    const found = which.split('\n').find(l => l.trim());
+    if (found) return found.trim();
+  } catch {}
+  return null;
+}
+const CHROME = findChrome();
 
 const SILENT = process.argv.includes('--silent');
 const log = (...a) => { if (!SILENT) console.log(...a); };
@@ -244,18 +265,22 @@ function main() {
   const html = renderHtml(reportMd);
   fs.writeFileSync(TMP_HTML, html);
 
-  log('Building Richard weekly report...');
-  execSync(`"${CHROME}" --headless --disable-gpu --no-sandbox --no-pdf-header-footer --print-to-pdf="${PDF_OUT}" "file://${TMP_HTML}" 2>/dev/null`, { stdio: 'pipe' });
-
-  // Save the report markdown alongside (so it's git-tracked even if PDF isn't)
+  // Save the report markdown (git-tracked even if PDF generation is unavailable)
   const reportMdPath = path.join(REPORTS_DIR, 'weekly-report.md');
   fs.writeFileSync(reportMdPath, reportMd);
+  log('✓ weekly-report.md written');
+
+  if (CHROME) {
+    log('Building Richard weekly report PDF...');
+    execSync(`"${CHROME}" --headless --disable-gpu --no-sandbox --no-pdf-header-footer --print-to-pdf="${PDF_OUT}" "file://${TMP_HTML}" 2>/dev/null`, { stdio: 'pipe' });
+    const size = fs.statSync(PDF_OUT).size;
+    log(`✓ PDF updated: ${PDF_OUT} (${(size/1024).toFixed(1)} KB)`);
+  } else {
+    log('⚠ No headless browser found — skipping PDF generation (markdown written)');
+  }
 
   // Clean up tmp html
   try { fs.unlinkSync(TMP_HTML); } catch {}
-
-  const size = fs.statSync(PDF_OUT).size;
-  log(`✓ PDF updated: ${PDF_OUT} (${(size/1024).toFixed(1)} KB)`);
 }
 
 main();

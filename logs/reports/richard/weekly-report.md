@@ -1,6 +1,6 @@
 # Weekly Status Report
 
-**Week of:** Apr 27 – May 1, 2026 (2026-W18)
+**Week of:** May 11 – May 15, 2026 (2026-W20)
 **Project:** One Source Gas — Customer Portal & Website
 **For:** Richard Strever
 **From:** Brad Ferrer
@@ -62,4 +62,4 @@ _(none yet — populated by `/park` command)_
 
 ---
 
-*Generated automatically from project logs at 5/1/2026, 9:47:24 PM.*
+*Generated automatically from project logs at 5/15/2026, 9:09:24 AM.*
