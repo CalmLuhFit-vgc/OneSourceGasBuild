@@ -1,5 +1,9 @@
 # Friday summaries for Richard
 
+## 2026-06-26
+
+Light week with no new build activity logged — the One Source Gas portal is still in pre-kickoff setup, and the original SOW ($24,500 fixed-bid or $6,000/month hybrid) remains in place with no change orders. Once the engagement path is confirmed, Brad kicks off the first sprint immediately: scaffolding the Next.js app, standing up Supabase, and building the core customer portal foundation. The intake form and your engagement choice are still the one open item — whenever you can get that back to Brad, he can lock in the contract and set an official start date.
+
 ## 2026-06-19
 
 Light week — no build activity logged this week, and the project is still in pre-kickoff setup with the original SOW on the table. As soon as the engagement structure is confirmed, Brad kicks off the first sprint: scaffolding the Next.js app, standing up Supabase, and building the core customer portal foundation. The intake form and your engagement path choice (Fixed-Bid at $24,500 or Hybrid at $6,000/month) remain outstanding — that's the one thing Brad needs from you to lock in the contract and set an official start date.
